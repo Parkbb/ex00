@@ -7,6 +7,19 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- DBCP 설정 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="spring_user" />
+		<property name="password" value="jera1q2w3e" />
+	</bean>
+	
+	<!-- DB 연결 객체 생성 : 설정 객체를 가져다가 사용한다. -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+	
 	<context:component-scan base-package="org.zerock" />
 		
 </beans>
