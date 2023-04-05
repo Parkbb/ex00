@@ -7,5 +7,10 @@
 	<select id="list" resultType="org.zerock.board.vo.BoardVO">
 		select no, title, writer, writeDate, hit from board
 	</select>
- 
+ 	
+ 	<select id="view" resultType="org.zerock.board.vo.BoardVO">
+ 		select no, title, content, writer, wirteDate, hit from board
+ 		where no = #{no}
+ 	</select>
+ 	
 </mapper>
