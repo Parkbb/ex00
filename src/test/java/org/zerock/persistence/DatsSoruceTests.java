@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class DatsSoruceTests {
 	@Setter(onMethod_ = @Autowired)
 	private DataSource dataSource;
 	
+	@Setter(onMethod_ = @Autowired)
+	private SqlSessionFactory sqlsession;
+	
 	@Test
 	public void testConnection() {
 		
@@ -38,5 +43,24 @@ public class DatsSoruceTests {
 		}
 		
 	}
+	
+	@Test
+	public void testMyBatis() {
+		
+		try (SqlSession session = sqlsession.openSession();
+				Connection con = dataSource.getConnection()){
+			log.info(session);
+			String sql = "select sysdate from dual";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			log.info(rs.getString(1));
+			log.info(con);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 }
